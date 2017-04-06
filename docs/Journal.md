@@ -38,7 +38,7 @@ I've created a new class and annotated that with `@Configuration` so it's automa
 ```
 This two classes are actually necessary only if you decide to query your resources with a rest template. Otherwise you probably will not be able to read the resources properly.
 
-**Note**: check out the [related error](###Error-With-Converter)
+**Note**: check out the [related error](#error-with-converter)
 
 ### RestTemplate
 Everytime that you need to query an API you should use a RestTemplate. That's why the configuration is needed
