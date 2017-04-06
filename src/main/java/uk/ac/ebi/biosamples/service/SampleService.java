@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
+
 @Service
 public class SampleService {
     private Map<String, String> mockCharacteristics;
@@ -30,14 +33,14 @@ public class SampleService {
                     sample.setCharacteristics(mockCharacteristics);
                     allSamples.put(name, sample);
                 });
-//        allSamples.get("test1").setDerivedTo(asList(
-//                allSamples.get("test2"),
-//                allSamples.get("test3"))
-//        );
-//        allSamples.get("test2").setDerivedFrom(allSamples.get("test1"));
-//        allSamples.get("test3").setDerivedFrom(allSamples.get("test1"));
-//        allSamples.get("test2").setDerivedTo(singletonList(allSamples.get("test4")));
-//        allSamples.get("test4").setDerivedFrom(allSamples.get("test2"));
+        allSamples.get("test1").setDerivedTo(asList(
+                allSamples.get("test2"),
+                allSamples.get("test3"))
+        );
+        allSamples.get("test2").setDerivedFrom(allSamples.get("test1"));
+        allSamples.get("test3").setDerivedFrom(allSamples.get("test1"));
+        allSamples.get("test2").setDerivedTo(singletonList(allSamples.get("test4")));
+        allSamples.get("test4").setDerivedFrom(allSamples.get("test2"));
 
 
     }

@@ -1,10 +1,10 @@
 package uk.ac.ebi.biosamples.controller;
 
 import javassist.NotFoundException;
-import org.springframework.hateoas.ExposesResourceFor;
-import org.springframework.hateoas.MediaTypes;
-import org.springframework.hateoas.PagedResources;
-import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,27 +33,28 @@ public class SampleController {
     }
 
 
-    @RequestMapping(produces = { MediaTypes.HAL_JSON_VALUE })
-    public List<Resource<Sample>> samples() {
+    @GetMapping(produces = { MediaTypes.HAL_JSON_VALUE })
+    public HttpEntity<Resources<Resource<Sample>>> samples() {
         List<Sample> allSamples = sampleService.getAllSamples();
-        return allSamples.stream().map(sample -> resourceAssembler.toResource(sample)).collect(Collectors.toList());
+        List<Resource<Sample>> sampleResourceList = allSamples.stream().map(sample -> resourceAssembler.toResource(sample)).collect(Collectors.toList());
+        Resources<Resource<Sample>> sampleResources = new Resources<>(sampleResourceList);
+
+//
+        return ResponseEntity.ok(sampleResources);
+
     }
 
-    @RequestMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
-    public Resource<Sample> base(@PathVariable String id) throws NotFoundException {
+    @GetMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
+    public HttpEntity<Resource<Sample>> base(@PathVariable String id) throws NotFoundException {
         Sample sample = sampleService.getSampleById(id);
-        return resourceAssembler.toResource(sample);
+        return ResponseEntity.ok(resourceAssembler.toResource(sample));
     }
 
-    @RequestMapping(value = "/{id}/deriveTo", produces = MediaTypes.HAL_JSON_VALUE)
-    public PagedResources<Resource<Sample>> getDerivedTo(@PathVariable String id) throws NotFoundException {
+    @GetMapping(value = "/{id}/deriveTo", produces = MediaTypes.HAL_JSON_VALUE)
+    public HttpEntity<Resources<Sample>> getDerivedTo(@PathVariable String id) throws NotFoundException {
         Sample sample = sampleService.getSampleById(id);
-        List<Sample> deriveToList = sample.getDerivedTo();/*.stream()
-              .map(derivedToSample -> resourceAssembler.toResource(derivedToSample))
-              .collect(Collectors.toList());
-              */
-        return PagedResources.wrap(deriveToList,
-                new PagedResources.PageMetadata(deriveToList.size(),1, deriveToList.size(),1));
+        Resources<Sample> sampleResources = new Resources<>(sample.getDerivedTo());
+        return ResponseEntity.ok(sampleResources);
     }
 
 //    @RequestMapping(value = "/test", produces = MediaType.APPLICATION_JSON_VALUE)

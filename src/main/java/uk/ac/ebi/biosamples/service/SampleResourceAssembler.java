@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import uk.ac.ebi.biosamples.controller.SampleController;
 import uk.ac.ebi.biosamples.model.Sample;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -45,4 +46,5 @@ public class SampleResourceAssembler implements ResourceAssembler<Sample, Resour
         }
         return Optional.empty();
     }
+
 }

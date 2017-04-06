@@ -84,4 +84,18 @@ It was related to the `SampleRestController.search()` method, where the code was
 `ResponseEntity.ok().body(pagedResources)`. Using instead `ResponseEntity.ok(pagedResource)` there's no more problem 
 
 ### Error With Converter
-This is a test
+The message converter provided is working properly when is time to *deserialize* the object. Should be necessary then
+just for the rest template and nothing else. Indeed, that converter is not configured properly, so the serialization
+is raising an unwanted error. I'll comment it out to avoid this
+
+### Back to the origin
+I've tried to remove every single configuration from the project, and updated the 
+signatures of the methods in the controller to return HttpEntity of Resource and Resources.
+Actually, looking at [this question](http://stackoverflow.com/questions/21346387/how-to-correctly-use-pagedresourcesassembler-from-spring-data)
+what come out is that Spring HATEOAS ships with 3 different representation classes:
+- Resource: to express a single resource object
+- Resources: to express a **collection** of object
+- PagedResources: an *extension* of resources that include some metadata for the page.
+
+Checking the [HAL specification](https://tools.ietf.org/html/draft-kelly-json-hal-08#section-6), you can find that the plain serialization provided by Spring is already doing all the work.
+What I need to do for the other project that I'm working on is check which serialization we're putting in place that is sabotaging everything 
