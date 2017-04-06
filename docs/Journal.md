@@ -99,3 +99,11 @@ what come out is that Spring HATEOAS ships with 3 different representation class
 
 Checking the [HAL specification](https://tools.ietf.org/html/draft-kelly-json-hal-08#section-6), you can find that the plain serialization provided by Spring is already doing all the work.
 What I need to do for the other project that I'm working on is check which serialization we're putting in place that is sabotaging everything 
+
+### RestTemplate not deserializing Links
+Apparently, using the restTemplate provided by Spring Hateoas is enough
+to deserialize resource content. Unfortunately though is not enough to deserialize
+resource links. Indeed, trying the test `producesObject()` in [TestSerializationApplication](../src/test/java/uk/ac/ebi/biosamples/TestSerializationApplication.java)
+it was returning no links.
+The **solution** was to add the `@EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)`
+annotation to the application, and the links are now deserialized correctly
