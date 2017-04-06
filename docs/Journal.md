@@ -38,6 +38,7 @@ I've created a new class and annotated that with `@Configuration` so it's automa
 ```
 This two classes are actually necessary only if you decide to query your resources with a rest template. Otherwise you probably will not be able to read the resources properly.
 
+**Note**: check out the (related error)[### Error With Converter]
 
 ### RestTemplate
 Everytime that you need to query an API you should use a RestTemplate. That's why the configuration is needed
@@ -82,3 +83,5 @@ I've finally managed to solve the problem with the double content serialization.
 It was related to the `SampleRestController.search()` method, where the code was returning
 `ResponseEntity.ok().body(pagedResources)`. Using instead `ResponseEntity.ok(pagedResource)` there's no more problem 
 
+### Error With Converter
+This is a test
