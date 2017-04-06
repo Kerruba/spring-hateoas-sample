@@ -1,9 +1,10 @@
-package uk.ac.ebi.biosamples.model;
+package uk.ac.ebi.biosamples.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,10 @@ public class Sample {
 
     public Sample() {}
 
+    public Sample(String accession, Map<String, String> characteristics) {
+        this.accession = accession;
+        this.characteristics = characteristics;
+    }
 
     public void setAccession(String accession) {
         this.accession = accession;
@@ -30,6 +35,10 @@ public class Sample {
 
     public void setDerivedTo(List<Sample> derivedTo) {
         this.derivedTo = derivedTo;
+    }
+
+    public void setDerivedTo(Sample...derivedTo) {
+        this.derivedTo = Arrays.asList(derivedTo);
     }
 
     public Sample getDerivedFrom() {
