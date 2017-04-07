@@ -32,6 +32,14 @@ public class TestSerializationApplicationTests {
 		assertThat(entity.getBody()).contains("_links\":{\"self\":{\"href\"");
 	}
 
+	@Test
+    public void useSamplesCollectionName() {
+        ResponseEntity<String> entity = this.restTemplate.getForEntity("/samples",
+                String.class);
+	    assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.OK);
+	    assertThat(entity.getBody().contains("\"_embedded\":\"samples\":\"[{\"accession\""));
+    }
+
 
 	@Test
 	public void producesJsonWhenXmlIsPreferred() throws Exception {
@@ -46,11 +54,14 @@ public class TestSerializationApplicationTests {
 	}
 
 	@Test
-    public void producesObject() {
+    public void producesSampleObject() {
         ResponseEntity<Resource<Sample>> response = this.restTemplate.exchange("/samples/test1",
                 HttpMethod.GET, null, new ParameterizedTypeReference<Resource<Sample>>(){});
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         Resource<Sample> body = response.getBody();
+        assertThat(body).isNotNull();
         assertThat(body.getContent().getAccession()).isEqualTo("test1");
+        assertThat(body.getLinks()).hasSize(2);
     }
 
 }

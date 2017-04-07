@@ -7,10 +7,10 @@ import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import uk.ac.ebi.biosamples.service.Sample;
 import uk.ac.ebi.biosamples.service.SampleRepository;
 import uk.ac.ebi.biosamples.service.SampleResourceAssembler;
@@ -18,7 +18,7 @@ import uk.ac.ebi.biosamples.service.SampleResourceAssembler;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RestController
+@Controller
 @ExposesResourceFor(Sample.class)
 @RequestMapping("/samples")
 public class SampleController {

@@ -107,3 +107,11 @@ resource links. Indeed, trying the test `producesObject()` in [TestSerialization
 it was returning no links.
 The **solution** was to add the `@EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)`
 annotation to the application, and the links are now deserialized correctly
+
+### @RestController vs @Controller
+RestController is imposing a response of type `application/json` or `application/hal+json`. So if you require 
+an xml, is going to reply with status code `406 Not Acceptable`
+
+### Change name of collections inside `_embedded` objects
+In order to change the name of the collection you just need to annotate the Entity (Sample in this case) 
+with `@Relation(value="sample", collectionRelation="samples")`

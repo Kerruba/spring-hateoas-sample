@@ -2,6 +2,7 @@ package uk.ac.ebi.biosamples.service;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import org.springframework.hateoas.core.Relation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@Relation(value="sample", collectionRelation = "samples")
 public class Sample {
 
     private String accession;
