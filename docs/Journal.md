@@ -103,7 +103,7 @@ What I need to do for the other project that I'm working on is check which seria
 ### RestTemplate not deserializing Links
 Apparently, using the restTemplate provided by Spring Hateoas is enough
 to deserialize resource content. Unfortunately though is not enough to deserialize
-resource links. Indeed, trying the test `producesObject()` in [TestSerializationApplication](../src/test/java/uk/ac/ebi/biosamples/TestSerializationApplication.java)
+resource links. Indeed, trying the test `producesObject()` in [TestSerializationApplicationTests](../src/test/java/uk/ac/ebi/biosamples/TestSerializationApplicationTests.java)
 it was returning no links.
 The **solution** was to add the `@EnableHypermediaSupport(type = EnableHypermediaSupport.HypermediaType.HAL)`
 annotation to the application, and the links are now deserialized correctly
